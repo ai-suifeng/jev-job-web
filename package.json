@@ -1,0 +1,21 @@
+{
+  "name": "jev-resume-screening",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env src/server.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "pdfjs-dist": "^6.3.289",
+    "yauzl": "^3.4.0"
+  },
+  "devDependencies": {
+    "pdf-lib": "^1.17.1",
+    "yazl": "^3.3.1"
+  }
+}
