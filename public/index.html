@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#102923">
+  <title>Jev 人才筛选工作台</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/sorting.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#top" aria-label="返回页面顶部">
+        <span class="brand-mark">J<span>·</span></span>
+        <span class="brand-copy"><strong>Jev Talent</strong><small>招聘筛选工作台</small></span>
+      </a>
+      <div class="sidebar-label">工作流程</div>
+      <nav class="side-nav" aria-label="主导航">
+        <a href="#jobs"><span class="nav-index">01</span><span>职位配置</span><span class="nav-arrow">↗</span></a>
+        <a href="#screen"><span class="nav-index">02</span><span>上传筛选</span><span class="nav-arrow">↗</span></a>
+        <a href="#results"><span class="nav-index">03</span><span>结果查看</span><span class="nav-arrow">↗</span></a>
+      </nav>
+      <div class="sidebar-foot">
+        <div class="status-dot"></div>
+        <div><strong>本地工作台</strong><span>简历文件不在本地留存</span></div>
+      </div>
+    </aside>
+
+    <main class="main" id="top">
+      <header class="topbar">
+        <div class="breadcrumb">工作台 <span>/</span> 简历筛选</div>
+        <div class="topbar-right"><span class="topbar-dot"></span> 基于 TypeSafe Jev</div>
+      </header>
+
+      <div class="page-content">
+        <section class="hero" aria-labelledby="hero-title">
+          <div class="hero-content">
+            <div class="eyebrow"><span class="eyebrow-line"></span> RECRUITMENT INTELLIGENCE</div>
+            <h1 id="hero-title">更快找到<span>合适的人</span></h1>
+            <p>定义岗位标准，批量上传简历。每一条匹配结论都能回到简历原文核对。</p>
+            <a href="#jobs" class="hero-link">开始配置职位 <span>↗</span></a>
+          </div>
+          <div class="hero-visual" aria-hidden="true">
+            <div class="orbit orbit-outer"></div><div class="orbit orbit-middle"></div><div class="orbit orbit-inner"></div>
+            <div class="hero-core">JEV</div>
+            <div class="orbit-point point-one"></div><div class="orbit-point point-two"></div><div class="orbit-point point-three"></div>
+          </div>
+        </section>
+
+        <div class="metric-row" aria-label="工作台概览">
+          <div class="metric-card"><span class="metric-icon icon-green">▦</span><div><small>已保存职位</small><strong id="job-count">0</strong></div></div>
+          <div class="metric-card"><span class="metric-icon icon-amber">⌁</span><div><small>本批次简历</small><strong id="resume-count">0</strong></div></div>
+          <div class="metric-card"><span class="metric-icon icon-blue">✓</span><div><small>建议匹配</small><strong id="match-count">0</strong></div></div>
+        </div>
+
+        <section class="workspace-section" id="jobs" aria-labelledby="jobs-title">
+          <div class="section-heading">
+            <div><span class="section-kicker">STEP 01 · DEFINE</span><h2 id="jobs-title">配置招聘职位</h2><p>把必要条件和加分项分开，筛选依据更清晰。</p></div>
+            <div class="heading-actions"><button class="button button-soft" id="preset-button" type="button">加载 Java 示例</button><button class="button button-dark" id="new-job-button" type="button">＋ 新建职位</button></div>
+          </div>
+          <div class="jobs-layout">
+            <div class="panel saved-panel">
+              <div class="panel-head"><h3>已保存职位</h3><span id="saved-count" class="count-pill">0</span></div>
+              <div id="jobs-list" class="jobs-list"></div>
+            </div>
+            <form class="panel job-form" id="job-form">
+              <div class="panel-head"><div><h3 id="editor-title">新建职位</h3><p>保存后即可用于简历筛选</p></div><span class="form-marker">岗位配置</span></div>
+              <label class="field-label" for="job-title">职位名称 <span>*</span></label>
+              <input id="job-title" name="title" class="text-input" maxlength="120" placeholder="例如：Java 高级开发" required>
+              <div class="requirements-head"><div><label class="field-label">招聘要求 <span>*</span></label><p>必要条件决定是否匹配；加分项用于排序。</p></div><button class="text-button" id="add-requirement" type="button">＋ 添加要求</button></div>
+              <div id="requirement-list" class="requirement-list"></div>
+              <div class="form-footer"><span id="job-form-hint">请至少设置一条招聘要求</span><div><button class="button button-ghost" id="delete-job-button" type="button" hidden>删除职位</button><button class="button button-primary" type="submit">保存职位 <span>↗</span></button></div></div>
+            </form>
+          </div>
+        </section>
+
+        <section class="workspace-section" id="screen" aria-labelledby="screen-title">
+          <div class="section-heading">
+            <div><span class="section-kicker">STEP 02 · SCREEN</span><h2 id="screen-title">上传并筛选简历</h2><p>支持单份或多份 PDF，也可以上传包含 PDF 的 ZIP 压缩包。</p></div>
+          </div>
+          <form class="panel upload-panel" id="upload-form">
+            <div class="upload-intro"><div class="upload-step"><span>01</span> 选择职位</div><label class="field-label" for="screen-job">按照哪个职位筛选？</label><select class="text-input select-input" id="screen-job" required><option value="">请先保存一个职位</option></select></div>
+            <div class="upload-intro"><div class="upload-step"><span>02</span> 添加文件</div><div class="drop-zone" id="drop-zone" role="button" tabindex="0" aria-label="选择 PDF 或 ZIP 文件">
+              <input id="file-input" type="file" accept=".pdf,.zip,application/pdf,application/zip" multiple hidden>
+              <div class="drop-icon">⇧</div><strong>拖入文件，或点击选择</strong><span>PDF / ZIP · 不限简历份数 · 上传总量不超过 40 MB</span>
+            </div><div id="file-list" class="file-list"></div></div>
+            <div class="upload-footer"><span>文件仅在本次请求中处理；提取的文字会发送至 TypeSafe Jev。</span><button type="submit" class="button button-primary button-large" id="run-button">开始筛选 <span>→</span></button></div>
+            <div id="upload-status" class="upload-status" role="status" aria-live="polite"></div>
+          </form>
+        </section>
+
+        <section class="workspace-section result-section" id="results" aria-labelledby="results-title">
+          <div class="section-heading"><div><span class="section-kicker">STEP 03 · REVIEW</span><h2 id="results-title">筛选结果</h2><p>先看必要条件，再参考加分和原文证据。</p></div></div>
+          <div id="results-content" class="results-content"><div class="empty-results"><div class="empty-graphic">▧</div><h3>等待第一批简历</h3><p>选择职位并上传文件，筛选结果会显示在这里。</p></div></div>
+        </section>
+        <footer class="page-footer"><span>Jev Talent · 招聘筛选工作台</span><span>所有结论均建议由 HR 结合原始简历复核</span></footer>
+      </div>
+    </main>
+  </div>
+
+  <template id="requirement-template">
+    <div class="requirement-card">
+      <div class="requirement-top"><span class="requirement-number"></span><button type="button" class="icon-button remove-requirement" aria-label="移除此要求">×</button></div>
+      <div class="requirement-grid"><label><span class="field-label">要求类型</span><select class="text-input select-input requirement-kind"><option value="required">必要条件</option><option value="optional">偏好条件 · 不计分</option><option value="bonus-binary">加分项 · 满足即加分</option><option value="bonus-graded">加分项 · 按程度评分</option></select></label><label class="bonus-points-wrap"><span class="field-label">最高加分</span><input type="number" class="text-input bonus-points" min="1" max="100" step="1" value="10"></label></div>
+      <label><span class="field-label">具体条件</span><textarea class="text-input requirement-text" rows="2" maxlength="500" placeholder="写清可核对的工作经历、项目范围或成果" required></textarea></label>
+      <label class="levels-wrap"><span class="field-label">评分等级 <small>每行一级，从低到高，2–5 级</small></span><textarea class="text-input requirement-levels" rows="4" placeholder="无可核实经历\n参与模块开发\n负责关键模块\n主导系统架构"></textarea></label>
+    </div>
+  </template>
+  <dialog id="result-dialog" class="result-dialog" aria-labelledby="result-dialog-title">
+    <div class="dialog-top"><div><span class="dialog-kicker">RESUME REVIEW</span><h2 id="result-dialog-title">简历判断详情</h2></div><button type="button" class="dialog-close" id="close-result-dialog" aria-label="关闭详情">×</button></div>
+    <div id="result-dialog-content"></div>
+  </dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
